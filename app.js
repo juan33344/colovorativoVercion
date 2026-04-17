@@ -28,6 +28,7 @@ function renderTasks() {
     emptyMessage.style.color = '#6b7280';
     taskList.appendChild(emptyMessage);
     return;
+  }
 
   tasks.forEach((task, index) => {
     const item = document.createElement('li');
@@ -91,8 +92,6 @@ function renderSummary() {
     return;
   }
 
-  taskSummary.textContent = `Total: ${total} tarea(s) · Completadas: ${completed}`;
-=======
   taskSummary.textContent = `Total: ${total} tarea(s) · Completadas: ${completed}`;
 }
 
