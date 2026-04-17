@@ -20,10 +20,13 @@ Este repositorio está diseñado para apoyar la actividad de control de versione
 
 ## Instrucciones para ejecutar localmente
 
-1. Abrir `index.html` en el navegador.
-2. O usar un servidor local simple:
-   - Python 3: `python -m http.server 8000`
-   - Luego abrir `http://localhost:8000`
+**Opción principal (sin instalar nada):**
+1. Abre `index.html` directamente en tu navegador (haz clic derecho > Abrir con > navegador). La aplicación funciona completamente en el navegador.
+
+**Opciones alternativas si prefieres un servidor local:**
+- **Node.js (recomendado si tienes Node.js instalado):** `npx http-server` luego abre `http://localhost:8080`
+- **Python 3 (si tienes Python instalado):** `python -m http.server 8000` luego abre `http://localhost:8000`
+- **VS Code Live Server (extensión gratuita):** Instala la extensión "Live Server" de Ritwick Dey, luego haz clic derecho en `index.html` > "Open with Live Server".
 
 ## Docker (opcional)
 
