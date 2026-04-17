@@ -1,6 +1,7 @@
 const taskForm = document.getElementById('task-form');
 const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
+const taskSummary = document.getElementById('task-summary');
 
 const STORAGE_KEY = 'tareas-colaborativas';
 let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -11,6 +12,7 @@ function saveTasks() {
 
 function renderTasks() {
   taskList.innerHTML = '';
+  renderSummary();
 
   if (tasks.length === 0) {
     const emptyMessage = document.createElement('li');
@@ -65,6 +67,18 @@ function deleteTask(index) {
   tasks.splice(index, 1);
   saveTasks();
   renderTasks();
+}
+
+function renderSummary() {
+  const total = tasks.length;
+  const completed = tasks.filter((task) => task.completed).length;
+
+  if (total === 0) {
+    taskSummary.textContent = 'Aún no has agregado tareas.';
+    return;
+  }
+
+  taskSummary.textContent = `Total: ${total} tarea(s). Completadas: ${completed}.`;
 }
 
 taskForm.addEventListener('submit', (event) => {

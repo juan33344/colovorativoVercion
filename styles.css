@@ -76,6 +76,16 @@ section h2 {
   margin: 0;
 }
 
+.task-summary {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+}
+
 .task-item {
   display: flex;
   align-items: center;
