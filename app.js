@@ -5,7 +5,14 @@ const taskSummary = document.getElementById('task-summary');
 const clearCompletedButton = document.getElementById('clear-completed');
 
 const STORAGE_KEY = 'tareas-colaborativas';
-let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+let tasks = [];
+
+try {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  tasks = stored ? JSON.parse(stored) : [];
+} catch (error) {
+  tasks = [];
+}
 
 function saveTasks() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
@@ -21,7 +28,6 @@ function renderTasks() {
     emptyMessage.style.color = '#6b7280';
     taskList.appendChild(emptyMessage);
     return;
-  }
 
   tasks.forEach((task, index) => {
     const item = document.createElement('li');
@@ -85,7 +91,9 @@ function renderSummary() {
     return;
   }
 
-  taskSummary.textContent = `Total: ${total} tarea(s). Completadas: ${completed}.`;
+  taskSummary.textContent = `Total: ${total} tarea(s) · Completadas: ${completed}`;
+=======
+  taskSummary.textContent = `Total: ${total} tarea(s) · Completadas: ${completed}`;
 }
 
 taskForm.addEventListener('submit', (event) => {
@@ -100,8 +108,6 @@ taskForm.addEventListener('submit', (event) => {
   taskInput.value = '';
 });
 
-clearCompletedButton.addEventListener('click', () => {
-  clearCompletedTasks();
-});
+clearCompletedButton.addEventListener('click', clearCompletedTasks);
 
 renderTasks();
