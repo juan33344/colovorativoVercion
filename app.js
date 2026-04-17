@@ -2,6 +2,7 @@ const taskForm = document.getElementById('task-form');
 const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 const taskSummary = document.getElementById('task-summary');
+const clearCompletedButton = document.getElementById('clear-completed');
 
 const STORAGE_KEY = 'tareas-colaborativas';
 let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -69,6 +70,12 @@ function deleteTask(index) {
   renderTasks();
 }
 
+function clearCompletedTasks() {
+  tasks = tasks.filter((task) => !task.completed);
+  saveTasks();
+  renderTasks();
+}
+
 function renderSummary() {
   const total = tasks.length;
   const completed = tasks.filter((task) => task.completed).length;
@@ -91,6 +98,10 @@ taskForm.addEventListener('submit', (event) => {
 
   addTask(text);
   taskInput.value = '';
+});
+
+clearCompletedButton.addEventListener('click', () => {
+  clearCompletedTasks();
 });
 
 renderTasks();
