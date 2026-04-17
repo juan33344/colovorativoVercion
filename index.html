@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Tareas Colaborativa</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Lista de Tareas Colaborativa</h1>
+    <p>Agrega tareas, marca como completadas y revisa los cambios hechos en cada rama.</p>
+
+    <form id="task-form">
+      <input id="task-input" type="text" placeholder="Escribe una nueva tarea" autocomplete="off" />
+      <button type="submit">Agregar tarea</button>
+    </form>
+
+    <section>
+      <h2>Tareas pendientes</h2>
+      <ul id="task-list"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+
+# Docker
+*.log
+
+# IDEs
+.vscode/
