@@ -1,0 +1,117 @@
+diff --git a/app.js b/app.js
+index e4310b9..be819b9 100644
+--- a/app.js
++++ b/app.js
+@@ -1,9 +1,18 @@
+ const taskForm = document.getElementById('task-form');
+ const taskInput = document.getElementById('task-input');
+ const taskList = document.getElementById('task-list');
++const taskSummary = document.getElementById('task-summary');
++const clearCompletedButton = document.getElementById('clear-completed');
+ 
+ const STORAGE_KEY = 'tareas-colaborativas';
+-let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
++let tasks = [];
++
++try {
++  const stored = localStorage.getItem(STORAGE_KEY);
++  tasks = stored ? JSON.parse(stored) : [];
++} catch (error) {
++  tasks = [];
++}
+ 
+ function saveTasks() {
+   localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+@@ -11,6 +20,7 @@ function saveTasks() {
+ 
+ function renderTasks() {
+   taskList.innerHTML = '';
++  renderSummary();
+ 
+   if (tasks.length === 0) {
+     const emptyMessage = document.createElement('li');
+@@ -18,7 +28,6 @@ function renderTasks() {
+     emptyMessage.style.color = '#6b7280';
+     taskList.appendChild(emptyMessage);
+     return;
+-  }
+ 
+   tasks.forEach((task, index) => {
+     const item = document.createElement('li');
+@@ -67,6 +76,24 @@ function deleteTask(index) {
+   renderTasks();
+ }
+ 
++function clearCompletedTasks() {
++  tasks = tasks.filter((task) => !task.completed);
++  saveTasks();
++  renderTasks();
++}
++
++function renderSummary() {
++  const total = tasks.length;
++  const completed = tasks.filter((task) => task.completed).length;
++
++  if (total === 0) {
++    taskSummary.textContent = 'Aún no has agregado tareas.';
++    return;
++  }
++
++  taskSummary.textContent = `Total: ${total} tarea(s) · Completadas: ${completed}`;
++}
++
+ taskForm.addEventListener('submit', (event) => {
+   event.preventDefault();
+   const text = taskInput.value.trim();
+@@ -79,4 +106,6 @@ taskForm.addEventListener('submit', (event) => {
+   taskInput.value = '';
+ });
+ 
++clearCompletedButton.addEventListener('click', clearCompletedTasks);
++
+ renderTasks();
+diff --git a/index.html b/index.html
+index 4d7ca21..dd21726 100644
+--- a/index.html
++++ b/index.html
+@@ -16,6 +16,9 @@
+       <button type="submit">Agregar tarea</button>
+     </form>
+ 
++    <div id="task-summary" class="task-summary">Aún no has agregado tareas.</div>
++    <button id="clear-completed" type="button" class="secondary-btn">Limpiar completadas</button>
++
+     <section>
+       <h2>Tareas pendientes</h2>
+       <ul id="task-list"></ul>
+diff --git a/styles.css b/styles.css
+index d9368b5..e737f12 100644
+--- a/styles.css
++++ b/styles.css
+@@ -65,6 +65,26 @@ button:hover {
+   background: #1d4ed8;
+ }
+ 
++.secondary-btn {
++  display: inline-block;
++  margin-bottom: 20px;
++  background: #64748b;
++}
++
++.secondary-btn:hover {
++  background: #475569;
++}
++
++.task-summary {
++  margin-bottom: 14px;
++  padding: 14px 16px;
++  border-radius: 16px;
++  background: #eff6ff;
++  border: 1px solid #dbeafe;
++  color: #1e40af;
++  font-weight: 600;
++}
++
+ section h2 {
+   margin: 0 0 12px;
+   font-size: 1.25rem;
