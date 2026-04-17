@@ -1,9 +1,18 @@
 const taskForm = document.getElementById('task-form');
 const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
+const taskSummary = document.getElementById('task-summary');
+const clearCompletedButton = document.getElementById('clear-completed');
 
 const STORAGE_KEY = 'tareas-colaborativas';
-let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+let tasks = [];
+
+try {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  tasks = stored ? JSON.parse(stored) : [];
+} catch (error) {
+  tasks = [];
+}
 
 function saveTasks() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
@@ -11,6 +20,7 @@ function saveTasks() {
 
 function renderTasks() {
   taskList.innerHTML = '';
+  renderSummary();
 
   if (tasks.length === 0) {
     const emptyMessage = document.createElement('li');
@@ -18,7 +28,6 @@ function renderTasks() {
     emptyMessage.style.color = '#6b7280';
     taskList.appendChild(emptyMessage);
     return;
-  }
 
   tasks.forEach((task, index) => {
     const item = document.createElement('li');
@@ -67,6 +76,24 @@ function deleteTask(index) {
   renderTasks();
 }
 
+function clearCompletedTasks() {
+  tasks = tasks.filter((task) => !task.completed);
+  saveTasks();
+  renderTasks();
+}
+
+function renderSummary() {
+  const total = tasks.length;
+  const completed = tasks.filter((task) => task.completed).length;
+
+  if (total === 0) {
+    taskSummary.textContent = 'Aún no has agregado tareas.';
+    return;
+  }
+
+  taskSummary.textContent = `Total: ${total} tarea(s) · Completadas: ${completed}`;
+}
+
 taskForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const text = taskInput.value.trim();
@@ -78,5 +105,7 @@ taskForm.addEventListener('submit', (event) => {
   addTask(text);
   taskInput.value = '';
 });
+
+clearCompletedButton.addEventListener('click', clearCompletedTasks);
 
 renderTasks();

@@ -65,6 +65,26 @@ button:hover {
   background: #1d4ed8;
 }
 
+.secondary-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  background: #64748b;
+}
+
+.secondary-btn:hover {
+  background: #475569;
+}
+
+.task-summary {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+}
+
 section h2 {
   margin: 0 0 12px;
   font-size: 1.25rem;
